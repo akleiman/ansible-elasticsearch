@@ -1,10 +1,12 @@
 ---
 # Elasticsearch Ansible Variables
 
-
 elasticsearch_version: 1.3.0
-elasticsearch_heap_size: 16g
+elasticsearch_heap_size: 20g
+
 elasticsearch_max_open_files: 65535
+elasticsearch_max_locked_memory: unlimited
+
 elasticsearch_timezone: "America/Los_angeles"
 elasticsearch_node_max_local_storage_nodes: 1
 elasticsearch_index_mapper_dynamic: "true"
@@ -28,11 +30,22 @@ elasticsearch_breaker_total_limit: 8g
 
 elasticsearch_discovery_zen_minimum_master_nodes: 12
 
+elasticsearch_discovery_zen_ping_multicast_enabled: "false"  # failed after 2/25/15 switch upgrade
+elasticsearch_discovery_zen_ping_unicast_hosts: ["dbfarm-01:9300","dbfarm-02:9300","dbfarm-03:9300","dbfarm-04:9300","dbfarm-05:9300","dbfarm-06:9300","dbfarm-07:9300","dbfarm-08:9300","dbfarm-09:9300","dbfarm-10:9300","dbfarm-11:9300","dbfarm-12:9300","dbfarm-13:9300","dbfarm-14:9300","dbfarm-15:9300","dbfarm-16:9300","dbfarm-17:9300","dbfarm-18:9300","dbfarm-19:9300","dbfarm-20:9300"]
+
 elasticsearch_gateway_recover_after_nodes: 11
 elasticsearch_gateway_recover_after_time: 1h
 elasticsearch_gateway_expected_nodes: 20
 
+elasticsearch_discovery_zen_fd_ping_interval: 1s 
+elasticsearch_discovery_zen_fd_ping_timeout: 120s # 30s
+elasticsearch_discovery_zen_fd_ping_retries: 5 # 3
+
+# redirect marvel logging to separate monitoring cluster on dbfarm-21:23
+elasticsearch_plugin_marvel_agent_exporter_es_hosts: ["dbfarm-21:9200","dbfarm-22:9200","dbfarm-23:9200"] 
+
 # action.disable_delete_all_indices: true
+elasticsearch_misc_disable_delete_all_indices: true
 
 # metrics_graphite_host: "graphite.us.archive.org"
 
