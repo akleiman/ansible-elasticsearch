@@ -6,11 +6,11 @@
   shell: echo {{ elasticsearch_timezone }} > /etc/timezone; dpkg-reconfigure --frontend noninteractive tzdata
 
 # Update repos
-#- name: Install python-software-properties
-#  apt: pkg=python-software-properties state=present update_cache=yes cache_valid_time={{apt_cache_valid_time}}
-#- name: Update repositories
-#  apt_repository: repo={{ item }} state=present update_cache=yes
-#  with_items: elasticsearch_apt_repos
+- name: Install python-software-properties
+  apt: pkg=python-software-properties state=present update_cache=yes cache_valid_time={{apt_cache_valid_time}}
+- name: Update repositories
+  apt_repository: repo={{ item }} state=present update_cache=yes
+  with_items: elasticsearch_apt_repos
 
 # Accept Oracle license
 - name: Accept Oracle license prior JDK installation
@@ -69,6 +69,8 @@
   when: elasticsearch_plugin_dir is defined
 - file: path={{ elasticsearch_plugin_dir }} state=directory owner={{ elasticsearch_user }} group={{ elasticsearch_group }} recurse=yes
   when: elasticsearch_plugin_dir is defined
+- file: path={{ elasticsearch_conf_dir }}/script state=directory owner={{ elasticsearch_user }} group={{ elasticsearch_group }} recurse=yes
+  when: elasticsearch_conf_dir is defined
 
 # Configure open file limits
 - name: Configuring open file limits
@@ -104,6 +106,11 @@
 # Install Marvel Plugin
 - include: marvel.yml
   when: (elasticsearch_plugin_marvel_version is defined)
+
+# Install Groovy Scripts
+- name: Copy Groovy scripts from Petabox tree
+  shell: sudo cp /home/ximm/petabox/search/*.groovy  {{ elasticsearch_conf_dir }}/script/ 
+  when: elasticsearch_conf_dir is defined
 
 # Set defaults (for reboot)
 - name: Add to init scripts
