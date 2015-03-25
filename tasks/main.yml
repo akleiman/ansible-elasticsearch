@@ -69,7 +69,7 @@
   when: elasticsearch_plugin_dir is defined
 - file: path={{ elasticsearch_plugin_dir }} state=directory owner={{ elasticsearch_user }} group={{ elasticsearch_group }} recurse=yes
   when: elasticsearch_plugin_dir is defined
-- file: path={{ elasticsearch_conf_dir }}/script state=directory owner={{ elasticsearch_user }} group={{ elasticsearch_group }} recurse=yes
+- file: path={{ elasticsearch_conf_dir }}/scripts state=directory owner={{ elasticsearch_user }} group={{ elasticsearch_group }} recurse=yes
   when: elasticsearch_conf_dir is defined
 
 # Configure open file limits
@@ -109,7 +109,7 @@
 
 # Install Groovy Scripts
 - name: Copy Groovy scripts from Petabox tree
-  shell: sudo cp /home/ximm/petabox/search/*.groovy  {{ elasticsearch_conf_dir }}/script/ 
+  shell: sudo cp /home/ximm/petabox/search/*.groovy  {{ elasticsearch_conf_dir }}/scripts/ 
   when: elasticsearch_conf_dir is defined
 
 # Set defaults (for reboot)

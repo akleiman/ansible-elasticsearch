@@ -1,8 +1,8 @@
 ---
 # Elasticsearch Ansible Variables
 
-elasticsearch_version: 1.3.0
-elasticsearch_heap_size: 20g
+elasticsearch_version: 1.4.3
+elasticsearch_heap_size: 16g
 
 elasticsearch_max_open_files: 65535
 elasticsearch_max_locked_memory: unlimited
@@ -27,6 +27,8 @@ elasticsearch_fielddata_cache_size: 5g
 elasticsearch_breaker_fielddata_limit: 6g
 elasticsearch_breaker_request_limit: 2g
 elasticsearch_breaker_total_limit: 8g
+
+elasticsearch_http_cors_enabled: "true"
 
 elasticsearch_discovery_zen_minimum_master_nodes: 12
 

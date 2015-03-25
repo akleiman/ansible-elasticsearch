@@ -301,6 +301,13 @@ http.max_content_length: {{ elasticsearch_network_http_max_content_lengtht }}
 http.enabled: {{ elasticsearch_network_http_enabled }}
 {% endif %}
 
+# Enable CORS so 1.4.x Sense console in Marvel can query any node
+#
+# http.cors.enabled: true
+{% if elasticsearch_http_cors_enabled is defined %}
+http.cors.enabled: {{ elasticsearch_http_cors_enabled }}
+{% endif %} 
+
 ################################### Gateway ###################################
 
 # The gateway allows for persisting the cluster state between full cluster
