@@ -1,7 +1,7 @@
 ---
 # Elasticsearch Ansible Variables
 
-elasticsearch_version: 1.4.3
+elasticsearch_version: 1.5.0
 elasticsearch_heap_size: 16g
 
 elasticsearch_max_open_files: 65535
@@ -30,10 +30,10 @@ elasticsearch_breaker_total_limit: 8g
 
 elasticsearch_http_cors_enabled: "true"
 
-elasticsearch_discovery_zen_minimum_master_nodes: 12
+elasticsearch_discovery_zen_minimum_master_nodes: 3 # 12 if election, 3 if fixed 
 
 elasticsearch_discovery_zen_ping_multicast_enabled: "false"  # failed after 2/25/15 switch upgrade
-elasticsearch_discovery_zen_ping_unicast_hosts: ["dbfarm-01:9300","dbfarm-02:9300","dbfarm-03:9300","dbfarm-04:9300","dbfarm-05:9300","dbfarm-06:9300","dbfarm-07:9300","dbfarm-08:9300","dbfarm-09:9300","dbfarm-10:9300","dbfarm-11:9300","dbfarm-12:9300","dbfarm-13:9300","dbfarm-14:9300","dbfarm-15:9300","dbfarm-16:9300","dbfarm-17:9300","dbfarm-18:9300","dbfarm-19:9300","dbfarm-20:9300"]
+elasticsearch_discovery_zen_ping_unicast_hosts: ["dbfarm-01:9300","dbfarm-02:9300","dbfarm-03:9300"] # must match master_nodes in inventory
 
 elasticsearch_gateway_recover_after_nodes: 11
 elasticsearch_gateway_recover_after_time: 1h
