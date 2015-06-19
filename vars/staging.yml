@@ -2,12 +2,14 @@
 # Elasticsearch Ansible Variables
 # STAGING CLUSTER
 
+elasticsearch_version: 1.6.0
+
 # defines and must match /var/lib/elasticsearch data location
 elasticsearch_cluster_name: staging.elasticsearch.cluster  # was my.elasticsearch.cluster
 
 # best practice for proudction is REQUIRE all three master nodes to prevent split brain potential
 # this staging cluster can be more relaxed
-elasticsearch_discovery_zen_minimum_master_nodes: 2
+elasticsearch_discovery_zen_minimum_master_nodes: 3
 
 # STAGING CLUSTER does NOT have dedicated master nodes
 # multicast mode and discovery failed during switch upgrade, ONLY use defined unicast
