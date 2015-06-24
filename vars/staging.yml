@@ -2,8 +2,6 @@
 # Elasticsearch Ansible Variables
 # STAGING CLUSTER
 
-elasticsearch_version: 1.6.0
-
 # defines and must match /var/lib/elasticsearch data location
 elasticsearch_cluster_name: staging.elasticsearch.cluster  # was my.elasticsearch.cluster
 
