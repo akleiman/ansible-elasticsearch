@@ -15,11 +15,11 @@ elasticsearch_discovery_zen_ping_multicast_enabled: "false"
 elasticsearch_discovery_zen_ping_unicast_hosts: ["dbfarm-21:9300","dbfarm-22:9300","dbfarm-23:9300"]
 
 elasticsearch_gateway_recover_after_nodes: 2
-elasticsearch_gateway_recover_after_time: 1h
+elasticsearch_gateway_recover_after_time: 5m
 elasticsearch_gateway_expected_nodes: 3
 
 elasticsearch_discovery_zen_fd_ping_interval: 1s 
 elasticsearch_discovery_zen_fd_ping_timeout: 120s # 30s
 elasticsearch_discovery_zen_fd_ping_retries: 5 # 3
 
-elasticsearch_plugin_marvel_agent_enabled: false
+elasticsearch_plugin_marvel_agent_enabled: "false"
