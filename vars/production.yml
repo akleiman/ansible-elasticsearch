@@ -1,0 +1,27 @@
+---
+# Elasticsearch Ansible Variables
+# PRODUCTION CLUSTER 
+
+# defines and must match /var/lib/elasticsearch data location
+elasticsearch_cluster_name: production.elasticsearch.cluster  # was my.elasticsearch.cluster
+
+# REQUIRE all three master nodes to prevent split brain potential
+elasticsearch_discovery_zen_minimum_master_nodes: 3 
+
+# PRODUCTION CLUSTER uses dedicated master nodes
+# multicast mode and discovery failed after switch upgrade, ONLY use defined unicast
+elasticsearch_discovery_zen_ping_multicast_enabled: "false" 
+elasticsearch_discovery_zen_ping_unicast_hosts: ["dbfarm-01:9300","dbfarm-02:9300","dbfarm-03:9300"] # must match master_nodes in inventory
+
+# recover_after should equal expected/2+1
+elasticsearch_gateway_recover_after_nodes: 8  # could be 8 ie minimum for quorum, but we have hard masters anyway
+elasticsearch_gateway_recover_after_time: 5m
+elasticsearch_gateway_expected_nodes: 15 
+
+elasticsearch_discovery_zen_fd_ping_interval: 1s 
+elasticsearch_discovery_zen_fd_ping_timeout: 120s # 30s default... could probably scale back...
+elasticsearch_discovery_zen_fd_ping_retries: 5 # ran on 5 scaling back...
+
+# redirect Marvel logging to Monitoring cluster on dbfarm-21:23
+elasticsearch_plugin_marvel_agent_exporter_es_hosts: ["dbfarm-21:9200","dbfarm-22:9200","dbfarm-23:9200"] 
+

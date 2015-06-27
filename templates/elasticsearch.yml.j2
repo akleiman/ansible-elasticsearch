@@ -39,6 +39,14 @@ cluster.name: {{ elasticsearch_cluster_name }}
 node.name: {{ elasticsearch_node_name }}
 {% endif %}
 
+{% if elasticsearch_node_tag is defined %}
+node.tag: {{ elasticsearch_node_tag }}
+{% endif %}
+
+{% if elasticsearch_node_datacenter is defined %}
+node.datacenter: {{ elasticsearch_node_datacenter }}
+{% endif %}
+
 # Every node can be configured to allow or deny being eligible as the master,
 # and to allow or deny to store the data.
 #
@@ -293,6 +301,13 @@ http.max_content_length: {{ elasticsearch_network_http_max_content_lengtht }}
 http.enabled: {{ elasticsearch_network_http_enabled }}
 {% endif %}
 
+# Enable CORS so 1.4.x Sense console in Marvel can query any node
+#
+# http.cors.enabled: true
+{% if elasticsearch_http_cors_enabled is defined %}
+http.cors.enabled: {{ elasticsearch_http_cors_enabled }}
+{% endif %} 
+
 ################################### Gateway ###################################
 
 # The gateway allows for persisting the cluster state between full cluster
@@ -375,6 +390,25 @@ indices.recovery.max_size_per_sec: {{ elasticsearch_recovery_max_size_per_sec }}
 {% if elasticsearch_recovery_concurrent_streams is defined %}
 indices.recovery.concurrent_streams: {{ elasticsearch_recovery_concurrent_streams }}
 {% endif %}
+
+
+
+{% if elasticsearch_fielddata_cache_size is defined %}
+indices.fielddata.cache.size: {{ elasticsearch_fielddata_cache_size }}
+{% endif %}
+
+{% if elasticsearch_breaker_fielddata_limit is defined %}
+indices.breaker.fielddata.limit: {{ elasticsearch_breaker_fielddata_limit }}
+{% endif %}
+
+{% if elasticsearch_breaker_request_limit is defined %}
+indices.breaker.request.limit: {{ elasticsearch_breaker_request_limit }}
+{% endif %}
+
+{% if elasticsearch_breaker_total_limit is defined %}
+indices.breaker.total.limit: {{ elasticsearch_breaker_total_limit }}
+{% endif %}
+
 
 
 ################################## Discovery ##################################
@@ -536,4 +570,15 @@ action.auto_create_index: {{ elasticsearch_misc_auto_create_index }}
 {% endif %}
 {% if elasticsearch_misc_disable_delete_all_indices is defined %}
 action.disable_delete_all_indices: {{ elasticsearch_misc_disable_delete_all_indices }}
+{% endif %}
+{% if elasticsearch_thread_pools is defined %}
+{% for threadPoolSetting in elasticsearch_thread_pools %}
+{{ threadPoolSetting }}
+{% endfor %}
+{% endif %}
+
+############### Graphite ##################
+
+{% if metrics_graphite_host is defined %}
+metrics.graphite.host: {{ metrics_graphite_host }}
 {% endif %}

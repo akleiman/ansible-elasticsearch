@@ -1,0 +1,23 @@
+---
+# Elasticsearch Ansible Variables
+# STAGING CLUSTER
+
+# defines and must match /var/lib/elasticsearch data location
+elasticsearch_cluster_name: staging.elasticsearch.cluster  # was my.elasticsearch.cluster
+
+# best practice for proudction is REQUIRE all three master nodes to prevent split brain potential
+# this staging cluster can be more relaxed
+elasticsearch_discovery_zen_minimum_master_nodes: 3
+
+# STAGING CLUSTER does NOT have dedicated master nodes
+# multicast mode and discovery failed during switch upgrade, ONLY use defined unicast
+elasticsearch_discovery_zen_ping_multicast_enabled: "false"
+elasticsearch_discovery_zen_ping_unicast_hosts: ["dbfarm-16:9300","dbfarm-17:9300","dbfarm-18:9300"]
+
+elasticsearch_gateway_recover_after_nodes: 3
+elasticsearch_gateway_recover_after_time: 1h
+elasticsearch_gateway_expected_nodes: 5
+
+elasticsearch_discovery_zen_fd_ping_interval: 1s 
+elasticsearch_discovery_zen_fd_ping_timeout: 120s # 30s default... could probably scale back...
+elasticsearch_discovery_zen_fd_ping_retries: 3 # ran on 5 scaling back...

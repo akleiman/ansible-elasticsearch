@@ -81,7 +81,7 @@ Example `my-playbook-main.yml`:
 
 ### Launch
 ```
-$  ansible my-playbook-main.yml -i my-inventory.ini -e user=<your sudo user for the elasticsearch installation>
+$  ansible-playbook my-playbook-main.yml -i my-inventory.ini -e user=<your sudo user for the elasticsearch installation>
 ```
 
 ## Enabling Added Features
@@ -140,6 +140,16 @@ elasticsearch_custom_jars:
  - ...
 ```
 
+### Configuring Thread Pools
+Elasticsearch [thread pools](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-threadpool.html) can be configured using the `elasticsearch_thread_pools` list variable:
+
+```
+elasticsearch_thread_pools:
+  - "threadpool.bulk.type: fixed"
+  - "threadpool.bulk.size: 50"
+  - "threadpool.bulk.queue_size: 1000"
+```
+
 ### Enabling Sematext SPM
 Enable the SPM task in your playbook:
 
@@ -164,6 +174,14 @@ The following variables provide configuration for the plugin. More options may b
 - elasticsearch_plugin_marvel_agent_indices
 - elasticsearch_plugin_marvel_agent_interval
 - elasticsearch_plugin_marvel_agent_exporter_es_index_timeformat
+
+## Disable Java installation
+
+If you prefer to skip the built-in installation of the Oracle JRE, use the `elasticsearch_install_java` flag:
+
+```
+elasticsearch_install_java: "false"
+```
 
 ## Include role in a larger playbook
 ### Add this role as a git submodule

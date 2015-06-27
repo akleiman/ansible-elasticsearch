@@ -1,0 +1,14 @@
+---
+# Elasticsearch Ansible Playbook
+# for MONITORING CLUSTER
+- hosts: all
+  user: ximm 
+  sudo: yes
+
+  vars_files:
+    - defaults/main.yml
+    - vars/common.yml
+    - vars/monitoring.yml
+
+  tasks:
+    - include: tasks/main.yml

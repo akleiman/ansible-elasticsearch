@@ -1,0 +1,58 @@
+---
+# Elasticsearch Ansible Variables
+
+elasticsearch_version: 1.5.0
+elasticsearch_heap_size: 16g
+
+elasticsearch_max_open_files: 65535
+elasticsearch_max_locked_memory: unlimited
+
+elasticsearch_timezone: "America/Los_angeles"
+elasticsearch_node_max_local_storage_nodes: 1
+elasticsearch_index_mapper_dynamic: "true"
+elasticsearch_memory_bootstrap_mlockall: "true"
+elasticsearch_install_java: "true"
+elasticsearch_plugins:
+  # - { name: 'elasticsearch/elasticsearch-mapper-attachments/2.0.0' }
+  # - { name: 'com.github.richardwilly98.elasticsearch/elasticsearch-river-mongodb/2.0.0' }
+  - { name: 'facet-script', url: 'http://dl.bintray.com/content/imotov/elasticsearch-plugins/elasticsearch-facet-script-1.1.2.zip' }
+#   - { name: 'graphite', url: 'https://home.archive.org/~mccabe/elasticsearch-plugin-graphite-0.2-SNAPSHOT.zip' } # https://github.com/spinscale/elasticsearch-graphite-plugin
+
+elasticsearch_thread_pools:
+  - "threadpool.bulk.type: fixed"
+  - "threadpool.bulk.size: 50"
+  - "threadpool.bulk.queue_size: 1000"
+
+elasticsearch_fielddata_cache_size: 5g
+elasticsearch_breaker_fielddata_limit: 6g
+elasticsearch_breaker_request_limit: 2g
+elasticsearch_breaker_total_limit: 8g
+
+elasticsearch_http_cors_enabled: "true"
+
+elasticsearch_discovery_zen_minimum_master_nodes: 3 # 12 if election, 3 if fixed 
+
+elasticsearch_discovery_zen_ping_multicast_enabled: "false"  # failed after 2/25/15 switch upgrade
+elasticsearch_discovery_zen_ping_unicast_hosts: ["dbfarm-01:9300","dbfarm-02:9300","dbfarm-03:9300"] # must match master_nodes in inventory
+
+elasticsearch_gateway_recover_after_nodes: 11
+elasticsearch_gateway_recover_after_time: 1h
+elasticsearch_gateway_expected_nodes: 20
+
+elasticsearch_discovery_zen_fd_ping_interval: 1s 
+elasticsearch_discovery_zen_fd_ping_timeout: 120s # 30s
+elasticsearch_discovery_zen_fd_ping_retries: 5 # 3
+
+# redirect marvel logging to separate monitoring cluster on dbfarm-21:23
+elasticsearch_plugin_marvel_agent_exporter_es_hosts: ["dbfarm-21:9200","dbfarm-22:9200","dbfarm-23:9200"] 
+
+# action.disable_delete_all_indices: true
+elasticsearch_misc_disable_delete_all_indices: true
+
+# metrics_graphite_host: "graphite.us.archive.org"
+
+# metrics.graphite.port: The port to connect to (default: 2003)
+# metrics.graphite.every: The interval to push data (default: 1m)
+# metrics.graphite.prefix: The metric prefix that's sent with metric names (default: elasticsearch.your_cluster_name)
+# metrics.graphite.exclude: A regular expression allowing you to exclude certain metrics (note that the node does not start if the regex does not compile)
+# metrics.graphite.include: A regular expression to explicitely include certain metrics even though they matched the exclude (note that the node does not start if the regex does not compile)

@@ -1,0 +1,25 @@
+---
+# Elasticsearch Ansible Variables
+# MONITORING CLUSTER
+
+# defines and must match /var/lib/elasticsearch data location
+elasticsearch_cluster_name: monitoring.elasticsearch.cluster    # was my.elasticsearch.monitoring.cluster 
+
+# best practice for proudction is REQUIRE all three master nodes to prevent split brain potential
+# this monitoring cluster can be more relaxed
+elasticsearch_discovery_zen_minimum_master_nodes: 2
+
+# MONITORING CLUSTER does NOT have dedicated master nodes
+# multicast mode and discovery failed during switch upgrade, ONLY use defined unicast
+elasticsearch_discovery_zen_ping_multicast_enabled: "false"
+elasticsearch_discovery_zen_ping_unicast_hosts: ["dbfarm-21:9300","dbfarm-22:9300","dbfarm-23:9300"]
+
+elasticsearch_gateway_recover_after_nodes: 2
+elasticsearch_gateway_recover_after_time: 5m
+elasticsearch_gateway_expected_nodes: 3
+
+elasticsearch_discovery_zen_fd_ping_interval: 1s 
+elasticsearch_discovery_zen_fd_ping_timeout: 120s # 30s
+elasticsearch_discovery_zen_fd_ping_retries: 5 # 3
+
+elasticsearch_plugin_marvel_agent_enabled: "false"
