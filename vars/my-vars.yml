@@ -1,8 +1,9 @@
 ---
 # Elasticsearch Ansible Variables
 
-elasticsearch_version: 1.5.0
-elasticsearch_heap_size: 16g
+elasticsearch_version: 1.6.0
+# elasticsearch_heap_size: 16g
+elasticsearch_heap_size: 4g
 
 elasticsearch_max_open_files: 65535
 elasticsearch_max_locked_memory: unlimited
@@ -23,10 +24,14 @@ elasticsearch_thread_pools:
   - "threadpool.bulk.size: 50"
   - "threadpool.bulk.queue_size: 1000"
 
-elasticsearch_fielddata_cache_size: 5g
-elasticsearch_breaker_fielddata_limit: 6g
-elasticsearch_breaker_request_limit: 2g
-elasticsearch_breaker_total_limit: 8g
+# elasticsearch_fielddata_cache_size: 5g
+# elasticsearch_breaker_fielddata_limit: 6g
+# elasticsearch_breaker_request_limit: 2g
+# elasticsearch_breaker_total_limit: 8g
+elasticsearch_fielddata_cache_size: 1g
+elasticsearch_breaker_fielddata_limit: 1g
+elasticsearch_breaker_request_limit: 1g
+elasticsearch_breaker_total_limit: 1g
 
 elasticsearch_http_cors_enabled: "true"
 

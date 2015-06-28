@@ -1,7 +1,7 @@
 ---
 # Elasticsearch Ansible Variables
 
-elasticsearch_version: 1.1.1
+elasticsearch_version: 1.6.0
 elasticsearch_heap_size: 1g
 elasticsearch_max_open_files: 65535
 elasticsearch_timezone: "America/New_York"

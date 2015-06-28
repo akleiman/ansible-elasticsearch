@@ -108,9 +108,9 @@
   when: (elasticsearch_plugin_marvel_version is defined)
 
 # Install Groovy Scripts
-- name: Copy Groovy scripts from Petabox tree
-  shell: sudo cp /home/ximm/petabox/search/*.groovy  {{ elasticsearch_conf_dir }}/scripts/ 
-  when: elasticsearch_conf_dir is defined
+# - name: Copy Groovy scripts from Petabox tree
+#   shell: sudo cp /home/ximm/petabox/search/*.groovy  {{ elasticsearch_conf_dir }}/scripts/ 
+#   when: elasticsearch_conf_dir is defined
 
 # Set defaults (for reboot)
 - name: Add to init scripts
