@@ -1,6 +1,6 @@
 ---
 # Elasticsearch Ansible Playbook
-- hosts: elasticsearch-instance-group-wmsg
+- hosts: tag_elasticsearch-dev-cluster
   # user: ximm # $user
   sudo: yes
 

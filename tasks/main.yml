@@ -72,7 +72,7 @@
 - file: path={{ elasticsearch_conf_dir }}/scripts state=directory owner={{ elasticsearch_user }} group={{ elasticsearch_group }} recurse=yes
   when: elasticsearch_conf_dir is defined
 
-shell: "echo Configuring open file limits"
+- shell: "echo Configuring open file limits"
 - lineinfile: dest=/etc/init.d/elasticsearch regexp='^(DAEMON_OPTS=".*-Des.max-open-files=true")$' insertafter='^(DAEMON_OPTS=".*CONF_DIR")$' line='DAEMON_OPTS="$DAEMON_OPTS -Des.max-open-files=true"'
 
 # Configure Elasticsearch Node
@@ -92,6 +92,8 @@ shell: "echo Configuring open file limits"
 # Install custom JARs
 - include: custom-jars.yml
   when: (elasticsearch_custom_jars is defined)
+
+- debug: var=elasticsearch_plugin_marvel_version
 
 # Install Marvel Plugin
 - include: marvel.yml
