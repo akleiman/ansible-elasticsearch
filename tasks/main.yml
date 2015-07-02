@@ -28,7 +28,7 @@
   with_items: elasticsearch_apt_dependencies
 
 # Configure user and group
-- name: Configuring user and group
+- name: Configuring user  and group
   group: name={{ elasticsearch_group }}
 - user: name={{ elasticsearch_user }} group={{ elasticsearch_group }} createhome=no
 
@@ -72,17 +72,7 @@
 - file: path={{ elasticsearch_conf_dir }}/scripts state=directory owner={{ elasticsearch_user }} group={{ elasticsearch_group }} recurse=yes
   when: elasticsearch_conf_dir is defined
 
-# Configure open file limits
-- name: Configuring open file limits
-  shell: "echo Configuring open file limits"
-- lineinfile: dest=/etc/security/limits.conf regexp='^{{ elasticsearch_user }}     -    nofile    {{ elasticsearch_max_open_files }}' insertafter=EOF line='{{ elasticsearch_user }}     -    nofile    {{ elasticsearch_max_open_files }}'
-  when: elasticsearch_max_open_files is defined
-- lineinfile: dest=/etc/security/limits.conf regexp='^{{ elasticsearch_user }}     -    memlock   {{ elasticsearch_max_locked_memory }}' insertafter=EOF line='{{ elasticsearch_user }}     -    memlock   {{ elasticsearch_max_locked_memory }}'
-  when: elasticsearch_max_locked_memory is defined
-- lineinfile: dest=/etc/pam.d/su regexp='^session    required   pam_limits.so' insertafter=EOF line='session    required   pam_limits.so'
-- lineinfile: dest=/etc/pam.d/common-session regexp='^session    required   pam_limits.so' insertafter=EOF line='session    required   pam_limits.so'
-- lineinfile: dest=/etc/pam.d/common-session-noninteractive regexp='^session    required   pam_limits.so' insertafter=EOF line='session    required   pam_limits.so'
-- lineinfile: dest=/etc/pam.d/sudo regexp='^session    required   pam_limits.so' insertafter=EOF line='session    required   pam_limits.so'
+shell: "echo Configuring open file limits"
 - lineinfile: dest=/etc/init.d/elasticsearch regexp='^(DAEMON_OPTS=".*-Des.max-open-files=true")$' insertafter='^(DAEMON_OPTS=".*CONF_DIR")$' line='DAEMON_OPTS="$DAEMON_OPTS -Des.max-open-files=true"'
 
 # Configure Elasticsearch Node
@@ -118,4 +108,5 @@
 
 # Restart Elasticsearch
 - name: Restarting Elasticsearch
-  service: name=elasticsearch state=restarted
+  service: name=elasticsearch state=restarted enabled=yes
+

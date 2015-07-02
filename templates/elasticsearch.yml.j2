@@ -37,6 +37,8 @@ cluster.name: {{ elasticsearch_cluster_name }}
 # node.name: "Franz Kafka"
 {% if elasticsearch_node_name is defined %}
 node.name: {{ elasticsearch_node_name }}
+{% elif ansible_node_name is defined %}
+node.name: {{ ansible_node_name }}-node
 {% endif %}
 
 {% if elasticsearch_node_tag is defined %}
