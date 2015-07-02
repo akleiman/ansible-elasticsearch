@@ -584,3 +584,13 @@ action.disable_delete_all_indices: {{ elasticsearch_misc_disable_delete_all_indi
 {% if metrics_graphite_host is defined %}
 metrics.graphite.host: {{ metrics_graphite_host }}
 {% endif %}
+
+############### GCE Unicast plugin #########
+cloud:
+  gce:
+    project_id: {{ project_id }}
+    zone: {{ zone }}
+discovery:
+  type: gce
+  gce:
+    tags: elasticsearch, {{cluster_tag}}

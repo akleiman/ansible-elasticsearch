@@ -18,7 +18,7 @@ elasticsearch_install_java: "true"
 elasticsearch_plugins:
   # - { name: 'elasticsearch/elasticsearch-mapper-attachments/2.0.0' }
   # - { name: 'com.github.richardwilly98.elasticsearch/elasticsearch-river-mongodb/2.0.0' }
-  - { name: 'facet-script', url: 'http://dl.bintray.com/content/imotov/elasticsearch-plugins/elasticsearch-facet-script-1.1.2.zip' }
+  #  - { name: 'facet-script', url: 'http://dl.bintray.com/content/imotov/elasticsearch-plugins/elasticsearch-facet-script-1.1.2.zip' }
   - { name: 'elasticsearch/elasticsearch-cloud-gce/2.6.0' }
 #   - { name: 'graphite', url: 'https://home.archive.org/~mccabe/elasticsearch-plugin-graphite-0.2-SNAPSHOT.zip' } # https://github.com/spinscale/elasticsearch-graphite-plugin
 
