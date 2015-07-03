@@ -37,8 +37,8 @@ cluster.name: {{ elasticsearch_cluster_name }}
 # node.name: "Franz Kafka"
 {% if elasticsearch_node_name is defined %}
 node.name: {{ elasticsearch_node_name }}
-{% elif ansible_node_name is defined %}
-node.name: {{ ansible_node_name }}-node
+{% elif ansible_nodename is defined %}
+node.name: {{ ansible_nodename }}-node
 {% endif %}
 
 {% if elasticsearch_node_tag is defined %}
@@ -56,14 +56,14 @@ node.datacenter: {{ elasticsearch_node_datacenter }}
 #
 # node.master: true
 {% if elasticsearch_node_master is defined %}
-node.master: {{ elasticsearch_node_master }}
+node.master: {{ elasticsearch_node_master | lower }}
 {% endif %}
 #
 # Allow this node to store data (enabled by default):
 #
 # node.data: true
 {% if elasticsearch_node_data is defined %}
-node.data: {{ elasticsearch_node_data }}
+node.data: {{ elasticsearch_node_data | lower }}
 {% endif %}
 
 # You can exploit these settings to design advanced cluster topologies.
@@ -585,12 +585,10 @@ action.disable_delete_all_indices: {{ elasticsearch_misc_disable_delete_all_indi
 metrics.graphite.host: {{ metrics_graphite_host }}
 {% endif %}
 
+# cloud.enabled: true
+
 ############### GCE Unicast plugin #########
-cloud:
-  gce:
-    project_id: {{ project_id }}
-    zone: {{ zone }}
-discovery:
-  type: gce
-  gce:
-    tags: elasticsearch, {{cluster_tag}}
+# cloud.gce.project_id: {{ project_id }}
+# cloud.gce.zone: {{ zone }}
+# discovery.type: gce
+# discovery.gce.tags: {{cluster_tag}}
