@@ -44,9 +44,16 @@
 
 # Uninstall previous version if applicable
 - name: Uninstalling previous version if applicable
+  file: path=/etc/init.d/elasticsearch state=absent
+  when: version_exists.stdout == 'no'
+- mount: name=/var/lib/elasticsearch state=unmounted fstype=ext4 src=/dev/sdb
+  when: version_exists.stdout == 'no'
+- name: Uninstalling dpkg
   shell: dpkg --remove elasticsearch
   when: version_exists.stdout == 'no'
 - file: path=/usr/share/elasticsearch state=absent
+  when: version_exists.stdout == 'no'
+- mount: name=/var/lib/elasticsearch src=/dev/sdb state=mounted fstype=ext4
   when: version_exists.stdout == 'no'
 
 # Install the deb
